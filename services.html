@@ -1,0 +1,2104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — JHA APP</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+<style>
+:root{
+ --bg:#050711;
+ --bg2:#090c19;
+ --white:#f7f9ff;
+ --muted:#9aa7c1;
+ --cyan:#45eaff;
+ --blue:#4da3ff;
+ --purple:#9b5cff;
+ --line:rgba(130,180,255,.16);
+ --glass:rgba(12,17,35,.62);
+ --ease:cubic-bezier(.2,.8,.2,1);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+ margin:0;
+ color:var(--white);
+ background:
+ radial-gradient(circle at 12% 12%,rgba(77,163,255,.10),transparent 28%),
+ radial-gradient(circle at 88% 12%,rgba(155,92,255,.11),transparent 30%),
+ linear-gradient(145deg,var(--bg),var(--bg2) 55%,#03050d);
+ font-family:Inter,Arial,sans-serif;
+ overflow-x:hidden;
+}
+
+body::before{
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:-3;
+ pointer-events:none;
+ opacity:.20;
+ background-image:
+ linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+ background-size:52px 52px;
+}
+
+body::after{
+ content:"";
+ position:fixed;
+ width:360px;
+ height:360px;
+ border-radius:50%;
+ pointer-events:none;
+ z-index:20;
+ left:var(--mx,-300px);
+ top:var(--my,-300px);
+ transform:translate(-50%,-50%);
+ background:radial-gradient(circle,rgba(69,234,255,.07),transparent 68%);
+}
+
+a{
+ color:inherit;
+ text-decoration:none;
+}
+
+button{
+ font:inherit;
+}
+
+img{
+ max-width:100%;
+ display:block;
+}
+
+.wrap{
+ width:min(1180px,calc(100% - 36px));
+ margin:auto;
+}
+
+.aurora{
+ position:fixed;
+ inset:-20%;
+ z-index:-2;
+ pointer-events:none;
+ filter:blur(70px);
+ opacity:.55;
+ background:
+ radial-gradient(ellipse at 20% 30%,rgba(0,185,255,.18),transparent 35%),
+ radial-gradient(ellipse at 80% 20%,rgba(155,92,255,.18),transparent 35%),
+ radial-gradient(ellipse at 50% 85%,rgba(45,105,255,.12),transparent 38%);
+ animation:aurora 18s ease-in-out infinite alternate;
+}
+
+@keyframes aurora{
+ from{transform:translate3d(-2%,-1%,0) scale(1)}
+ to{transform:translate3d(3%,2%,0) scale(1.08)}
+}
+
+/* TOP LIVE NOTICE */
+
+.top-notice{
+ height:46px;
+ overflow:hidden;
+ border-bottom:1px solid rgba(77,163,255,.18);
+ background:rgba(4,7,17,.88);
+ backdrop-filter:blur(18px);
+ position:relative;
+ z-index:100;
+}
+
+.notice-track{
+ height:100%;
+ width:max-content;
+ display:flex;
+ align-items:center;
+ animation:noticeScroll 24s linear infinite;
+}
+
+.notice-track:hover{
+ animation-play-state:paused;
+}
+
+.notice-content{
+ display:flex;
+ align-items:center;
+ gap:13px;
+ padding-right:80px;
+ white-space:nowrap;
+ font-size:12px;
+ font-weight:600;
+ color:#dfeaff;
+}
+
+.live-dot{
+ width:8px;
+ height:8px;
+ border-radius:50%;
+ background:#ff4d67;
+ box-shadow:
+ 0 0 0 5px rgba(255,77,103,.10),
+ 0 0 18px rgba(255,77,103,.75);
+ animation:pulse 1.7s infinite;
+}
+
+@keyframes pulse{
+ 50%{
+  box-shadow:
+  0 0 0 9px rgba(255,77,103,0),
+  0 0 24px rgba(255,77,103,.95);
+ }
+}
+
+.live{
+ color:#ff7588;
+ font-size:10px;
+ font-weight:900;
+ letter-spacing:.12em;
+}
+
+.price{
+ color:var(--cyan);
+ font-weight:900;
+}
+
+@keyframes noticeScroll{
+ from{transform:translateX(0)}
+ to{transform:translateX(-50%)}
+}
+
+/* NAVBAR */
+
+.nav-shell{
+ position:sticky;
+ top:12px;
+ z-index:90;
+ padding-top:14px;
+}
+
+.navbar{
+ min-height:70px;
+ display:flex;
+ align-items:center;
+ gap:22px;
+ padding:10px 14px 10px 18px;
+ border:1px solid rgba(255,255,255,.10);
+ border-radius:20px;
+ background:rgba(6,10,24,.70);
+ box-shadow:0 24px 80px rgba(0,0,0,.42);
+ backdrop-filter:blur(22px);
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ min-width:max-content;
+}
+
+.brand-logo{
+ width:42px;
+ height:42px;
+ object-fit:contain;
+ border-radius:12px;
+ background:#080c1b;
+ filter:drop-shadow(0 0 16px rgba(69,234,255,.18));
+}
+
+.brand-text{
+ font-family:"Space Grotesk";
+ font-weight:800;
+ font-size:18px;
+}
+
+.brand-text small{
+ display:block;
+ font-family:Inter;
+ font-size:8px;
+ color:#8290aa;
+ letter-spacing:.18em;
+ margin-top:2px;
+}
+
+.nav-links{
+ flex:1;
+ display:flex;
+ justify-content:center;
+ gap:4px;
+}
+
+.nav-link{
+ padding:10px 12px;
+ border-radius:12px;
+ color:#aab6cc;
+ font-size:13px;
+ font-weight:600;
+ transition:.25s var(--ease);
+}
+
+.nav-link:hover,
+.nav-link.active{
+ color:white;
+ background:rgba(255,255,255,.045);
+}
+
+.nav-link.active{
+ box-shadow:inset 0 -2px 0 var(--cyan);
+}
+
+.nav-actions{
+ display:flex;
+ gap:8px;
+}
+
+.nav-btn{
+ padding:10px 12px;
+ border-radius:12px;
+ border:1px solid rgba(255,255,255,.11);
+ background:rgba(255,255,255,.035);
+ color:#dbe6fb;
+ cursor:pointer;
+}
+
+/* HERO */
+
+.page-hero{
+ padding:100px 0 65px;
+ text-align:center;
+}
+
+.kicker{
+ color:var(--cyan);
+ font-size:10px;
+ font-weight:900;
+ letter-spacing:.18em;
+}
+
+.page-hero h1{
+ margin:12px auto 16px;
+ max-width:850px;
+ font-family:"Space Grotesk";
+ font-size:clamp(45px,7vw,78px);
+ line-height:.98;
+ letter-spacing:-.055em;
+}
+
+.gradient{
+ background:linear-gradient(105deg,#fff,#9ed7ff,#8d66ff);
+ -webkit-background-clip:text;
+ background-clip:text;
+ color:transparent;
+}
+
+.page-hero p{
+ max-width:700px;
+ margin:auto;
+ color:var(--muted);
+ line-height:1.75;
+ font-size:15px;
+}
+
+/* CATEGORY */
+
+.categories{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:9px;
+ margin:0 auto 45px;
+}
+
+.category{
+ border:1px solid rgba(255,255,255,.10);
+ background:rgba(255,255,255,.035);
+ color:#aebbd0;
+ padding:10px 15px;
+ border-radius:999px;
+ font-size:11px;
+ font-weight:800;
+ cursor:pointer;
+ transition:.25s;
+}
+
+.category:hover,
+.category.active{
+ color:white;
+ border-color:rgba(69,234,255,.45);
+ background:rgba(69,234,255,.08);
+ box-shadow:0 0 25px rgba(69,234,255,.08);
+}
+
+/* SERVICES */
+
+.section{
+ padding:55px 0 100px;
+}
+
+.section-heading{
+ margin-bottom:28px;
+}
+
+.section-heading h2{
+ margin:5px 0 7px;
+ font-family:"Space Grotesk";
+ font-size:clamp(30px,4vw,46px);
+ letter-spacing:-.04em;
+}
+
+.section-heading p{
+ margin:0;
+ color:var(--muted);
+ font-size:13px;
+}
+
+.services-grid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:16px;
+}
+
+.service-card{
+ position:relative;
+ overflow:hidden;
+ border:1px solid rgba(255,255,255,.10);
+ border-radius:24px;
+ background:linear-gradient(145deg,rgba(17,25,49,.76),rgba(7,11,24,.76));
+ box-shadow:0 25px 70px rgba(0,0,0,.28);
+ transition:.35s var(--ease);
+}
+
+.service-card:hover{
+ transform:translateY(-7px);
+ border-color:rgba(69,234,255,.35);
+ box-shadow:
+ 0 30px 80px rgba(0,0,0,.38),
+ 0 0 45px rgba(69,234,255,.07);
+}
+
+.service-image{
+ position:relative;
+ height:175px;
+ overflow:hidden;
+ background:#090e1d;
+}
+
+.service-image img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ object-position:center;
+ transition:.6s var(--ease);
+}
+
+.service-card:hover .service-image img{
+ transform:scale(1.07);
+}
+
+.service-image::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(to top,rgba(3,7,17,.70),transparent 65%);
+}
+
+.service-number{
+ position:absolute;
+ z-index:2;
+ left:12px;
+ top:12px;
+ width:35px;
+ height:35px;
+ display:grid;
+ place-items:center;
+ border-radius:11px;
+ background:rgba(3,7,17,.68);
+ border:1px solid rgba(255,255,255,.13);
+ backdrop-filter:blur(12px);
+ color:var(--cyan);
+ font-weight:900;
+ font-size:11px;
+}
+
+.service-icon{
+ position:absolute;
+ z-index:2;
+ right:12px;
+ top:12px;
+ width:38px;
+ height:38px;
+ display:grid;
+ place-items:center;
+ border-radius:12px;
+ background:rgba(3,7,17,.68);
+ border:1px solid rgba(255,255,255,.13);
+ backdrop-filter:blur(12px);
+ font-size:18px;
+}
+
+.service-body{
+ padding:18px;
+}
+
+.service-body h3{
+ margin:0 0 7px;
+ font-family:"Space Grotesk";
+ font-size:19px;
+}
+
+.service-body p{
+ margin:0 0 15px;
+ color:#8794ad;
+ font-size:11px;
+ line-height:1.6;
+ min-height:52px;
+}
+
+.service-bottom{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:8px;
+}
+
+.service-price{
+ color:#dce8ff;
+ font-size:11px;
+ font-weight:800;
+}
+
+.service-price strong{
+ display:block;
+ color:var(--cyan);
+ font-size:14px;
+}
+
+.service-link{
+ border:0;
+ background:transparent;
+ color:white;
+ font-size:11px;
+ font-weight:900;
+ cursor:pointer;
+}
+
+/* WHY */
+
+.why-grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px;
+}
+
+.why-card{
+ padding:25px;
+ border-radius:22px;
+ border:1px solid rgba(255,255,255,.09);
+ background:rgba(255,255,255,.025);
+ transition:.3s var(--ease);
+}
+
+.why-card:hover{
+ transform:translateY(-5px);
+ border-color:rgba(69,234,255,.28);
+ background:rgba(69,234,255,.035);
+}
+
+.why-icon{
+ width:48px;
+ height:48px;
+ display:grid;
+ place-items:center;
+ border-radius:15px;
+ background:rgba(69,234,255,.07);
+ border:1px solid rgba(69,234,255,.14);
+ font-size:21px;
+ margin-bottom:16px;
+}
+
+.why-card h3{
+ margin:0 0 8px;
+ font-family:"Space Grotesk";
+ font-size:18px;
+}
+
+.why-card p{
+ margin:0;
+ color:#8794ad;
+ line-height:1.65;
+ font-size:12px;
+}
+
+/* PROCESS */
+
+.process{
+ position:relative;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ gap:12px;
+}
+
+.process::before{
+ content:"";
+ position:absolute;
+ top:38px;
+ left:9%;
+ right:9%;
+ height:1px;
+ background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);
+ opacity:.45;
+}
+
+.process-card{
+ position:relative;
+ z-index:2;
+ text-align:center;
+ padding:8px;
+}
+
+.process-circle{
+ width:76px;
+ height:76px;
+ margin:auto;
+ display:grid;
+ place-items:center;
+ border-radius:50%;
+ border:1px solid rgba(69,234,255,.25);
+ background:rgba(7,13,28,.95);
+ box-shadow:0 0 30px rgba(69,234,255,.07);
+ font-family:"Space Grotesk";
+ font-size:20px;
+ font-weight:800;
+ color:var(--cyan);
+}
+
+.process-card h3{
+ margin:15px 0 7px;
+ font-size:15px;
+}
+
+.process-card p{
+ margin:0;
+ color:#7f8ca5;
+ font-size:10px;
+ line-height:1.55;
+}
+
+/* TECHNOLOGY */
+
+.tech-grid{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ gap:10px;
+}
+
+.tech{
+ padding:12px 16px;
+ border-radius:13px;
+ border:1px solid rgba(255,255,255,.09);
+ background:rgba(255,255,255,.025);
+ color:#bdc9dc;
+ font-size:11px;
+ font-weight:800;
+ transition:.25s;
+}
+
+.tech:hover{
+ color:white;
+ border-color:rgba(69,234,255,.35);
+ box-shadow:0 0 25px rgba(69,234,255,.08);
+ transform:translateY(-2px);
+}
+
+/* CTA */
+
+.cta{
+ padding:70px 30px;
+ text-align:center;
+ border-radius:30px;
+ border:1px solid rgba(69,234,255,.16);
+ background:
+ radial-gradient(circle at 20% 20%,rgba(69,234,255,.08),transparent 35%),
+ radial-gradient(circle at 80% 80%,rgba(155,92,255,.10),transparent 35%),
+ rgba(255,255,255,.025);
+ overflow:hidden;
+}
+
+.cta h2{
+ margin:8px 0 12px;
+ font-family:"Space Grotesk";
+ font-size:clamp(30px,5vw,52px);
+}
+
+.cta p{
+ max-width:620px;
+ margin:0 auto 24px;
+ color:var(--muted);
+ font-size:13px;
+ line-height:1.7;
+}
+
+.cta-btn{
+ display:inline-flex;
+ min-height:50px;
+ align-items:center;
+ justify-content:center;
+ padding:0 22px;
+ border-radius:14px;
+ border:1px solid rgba(69,234,255,.35);
+ background:linear-gradient(105deg,rgba(47,133,255,.28),rgba(155,92,255,.25));
+ color:white;
+ font-size:12px;
+ font-weight:900;
+ cursor:pointer;
+}
+
+/* FAQ */
+
+.faq{
+ max-width:850px;
+ margin:auto;
+}
+
+.faq-item{
+ margin-bottom:9px;
+ border:1px solid rgba(255,255,255,.09);
+ border-radius:15px;
+ overflow:hidden;
+ background:rgba(255,255,255,.025);
+}
+
+.faq-question{
+ width:100%;
+ padding:17px;
+ border:0;
+ background:none;
+ color:white;
+ text-align:left;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ cursor:pointer;
+ font-size:12px;
+ font-weight:800;
+}
+
+.faq-answer{
+ max-height:0;
+ overflow:hidden;
+ transition:max-height .35s ease;
+}
+
+.faq-answer p{
+ margin:0;
+ padding:0 17px 17px;
+ color:#8794ad;
+ font-size:11px;
+ line-height:1.7;
+}
+
+/* FOOTER */
+
+footer{
+ margin-top:70px;
+ padding:35px 0;
+ border-top:1px solid rgba(255,255,255,.08);
+ color:#74819a;
+ font-size:11px;
+}
+
+.footer-inner{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:20px;
+}
+
+.footer-brand{
+ color:#e4edff;
+ font-weight:800;
+}
+
+.footer-links{
+ display:flex;
+ gap:15px;
+ flex-wrap:wrap;
+}
+
+.footer-links a:hover{
+ color:var(--cyan);
+}
+
+/* SPARK */
+
+.spark{
+ position:fixed;
+ width:5px;
+ height:5px;
+ border-radius:50%;
+ pointer-events:none;
+ z-index:9999;
+ background:var(--cyan);
+ box-shadow:0 0 12px var(--cyan);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+ .services-grid{grid-template-columns:repeat(2,1fr)}
+ .why-grid{grid-template-columns:repeat(2,1fr)}
+ .process{grid-template-columns:repeat(3,1fr)}
+ .process::before{display:none}
+ .nav-links{display:none}
+}
+
+@media(max-width:620px){
+ .wrap{width:calc(100% - 24px)}
+ .top-notice{height:42px}
+ .notice-content{font-size:10px}
+ .navbar{min-height:62px}
+ .brand-logo{width:36px;height:36px}
+ .brand-text{font-size:15px}
+ .page-hero{padding:70px 0 45px}
+ .services-grid,
+ .why-grid{grid-template-columns:1fr}
+ .process{grid-template-columns:1fr 1fr}
+ .process-circle{width:62px;height:62px;font-size:17px}
+ .cta{padding:50px 18px}
+ .footer-inner{flex-direction:column;text-align:center}
+ body::after{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="aurora"></div>
+
+<!-- LIVE NOTICE -->
+<div class="top-notice">
+<div class="notice-track">
+
+<div class="notice-content">
+<span class="live-dot"></span>
+<span class="live">LIVE OFFER</span>
+<span>Professional Website बनवाने की कीमत</span>
+<span class="price">सिर्फ ₹3,000 से शुरू</span>
+<span>• Business • School • Hotel • Temple • E-Commerce</span>
+</div>
+
+<div class="notice-content">
+<span class="live-dot"></span>
+<span class="live">LIVE OFFER</span>
+<span>Professional Website Starting</span>
+<span class="price">Only ₹3,000</span>
+<span>• Custom Design • Responsive • Modern UI</span>
+</div>
+
+</div>
+</div>
+
+
+<!-- NAVBAR -->
+<div class="nav-shell">
+<div class="wrap">
+
+<nav class="navbar">
+
+<a class="brand" href="index.html">
+
+<img
+class="brand-logo"
+src="https://drive.google.com/thumbnail?id=1oOZ__XInzIoRW1zfFQs0sRTzkn3zlU8A&sz=w600"
+alt="JHA APP Logo"
+>
+
+<div class="brand-text">
+JHA APP
+<small>DIGITAL EXPERIENCES</small>
+</div>
+
+</a>
+
+<div class="nav-links">
+
+<a class="nav-link" href="index.html">Home</a>
+
+<a class="nav-link active" href="services.html">
+Services
+</a>
+
+<a class="nav-link" href="projects.html">
+Projects
+</a>
+
+<a class="nav-link" href="about.html">
+About
+</a>
+
+<a class="nav-link" href="pricing.html">
+Pricing
+</a>
+
+<a class="nav-link" href="contact.html">
+Contact
+</a>
+
+</div>
+
+<div class="nav-actions">
+<button class="nav-btn" onclick="openForm()">
+Start Project
+</button>
+</div>
+
+</nav>
+
+</div>
+</div>
+
+
+<!-- HERO -->
+<section class="page-hero wrap">
+
+<div class="kicker">
+JHA APP • DIGITAL SERVICES
+</div>
+
+<h1>
+Everything You Need
+<br>
+<span class="gradient">
+to Go Digital.
+</span>
+</h1>
+
+<p>
+From professional business websites to custom web applications,
+JHA APP builds modern digital experiences designed around your
+brand, customers and goals.
+</p>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<div class="categories wrap">
+
+<button class="category active" data-filter="all">
+All
+</button>
+
+<button class="category" data-filter="website">
+Websites
+</button>
+
+<button class="category" data-filter="development">
+Development
+</button>
+
+<button class="category" data-filter="design">
+Design
+</button>
+
+<button class="category" data-filter="optimization">
+Optimization
+</button>
+
+</div>
+
+
+<!-- SERVICES -->
+<section class="section wrap">
+
+<div class="section-heading">
+
+<div class="kicker">
+OUR SERVICES
+</div>
+
+<h2>
+Professional Digital Solutions
+</h2>
+
+<p>
+Choose the service that fits your requirement.
+</p>
+
+</div>
+
+
+<div class="services-grid">
+
+
+<!-- 01 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=85"
+alt="Business Website"
+>
+
+<span class="service-number">01</span>
+<span class="service-icon">🌐</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>Business Website</h3>
+
+<p>
+Professional website to present your business,
+services and brand online.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=business"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 02 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1558655146-d09347e92766?auto=format&fit=crop&w=1200&q=85"
+alt="Portfolio Website"
+>
+
+<span class="service-number">02</span>
+<span class="service-icon">👤</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>Portfolio Website</h3>
+
+<p>
+Showcase your work, skills, profile and achievements
+with a premium personal website.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=portfolio"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 03 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1200&q=85"
+alt="Ecommerce Website"
+>
+
+<span class="service-number">03</span>
+<span class="service-icon">🛒</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>E-Commerce</h3>
+
+<p>
+Online store with products, categories, shopping
+experience and business-ready design.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹5,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=ecommerce"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 04 -->
+<article class="service-card" data-category="development">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=85"
+alt="Web Application"
+>
+
+<span class="service-number">04</span>
+<span class="service-icon">⚡</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>Web Application</h3>
+
+<p>
+Custom web applications, dashboards and digital
+systems built for your specific workflow.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>Custom</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=webapp"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 05 -->
+<article class="service-card" data-category="design">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=1200&q=85"
+alt="UI UX Design"
+>
+
+<span class="service-number">05</span>
+<span class="service-icon">🎨</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>UI / UX Design</h3>
+
+<p>
+Modern interfaces, visual systems and user-focused
+experiences designed for your audience.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=uiux"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 06 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1559028012-481c04fa702d?auto=format&fit=crop&w=1200&q=85"
+alt="Landing Page"
+>
+
+<span class="service-number">06</span>
+<span class="service-icon">🚀</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>Landing Page</h3>
+
+<p>
+High-converting landing pages for products,
+campaigns, businesses and promotions.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=landing"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 07 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85"
+alt="School Website"
+>
+
+<span class="service-number">07</span>
+<span class="service-icon">🏫</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>School Website</h3>
+
+<p>
+Professional school website for information,
+notices, activities, gallery and contact.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=school"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- 08 -->
+<article class="service-card" data-category="website">
+
+<div class="service-image">
+
+<img
+src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=85"
+alt="Hotel Website"
+>
+
+<span class="service-number">08</span>
+<span class="service-icon">🏨</span>
+
+</div>
+
+<div class="service-body">
+
+<h3>Hotel / Temple</h3>
+
+<p>
+Elegant websites for hotels, restaurants, temples,
+trusts and local organizations.
+</p>
+
+<div class="service-bottom">
+
+<div class="service-price">
+STARTING
+<strong>₹3,000+</strong>
+</div>
+
+<a
+class="service-link"
+href="service-detail.html?service=hotel"
+>
+Explore →
+</a>
+
+</div>
+
+</div>
+
+</article>
+
+</div>
+
+</section>
+
+
+<!-- WHY CHOOSE -->
+<section class="section wrap">
+
+<div class="section-heading">
+
+<div class="kicker">
+WHY JHA APP
+</div>
+
+<h2>
+Why Choose Us?
+</h2>
+
+<p>
+Every project is built to look professional and work smoothly.
+</p>
+
+</div>
+
+
+<div class="why-grid">
+
+<div class="why-card">
+<div class="why-icon">💎</div>
+<h3>Premium Modern Design</h3>
+<p>
+Clean glass UI, modern layouts, professional typography
+and polished visual details.
+</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">📱</div>
+<h3>100% Responsive</h3>
+<p>
+Your website is designed to work properly across mobile,
+tablet and desktop screens.
+</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">⚡</div>
+<h3>Fast Performance</h3>
+<p>
+Lightweight structure and optimized visual elements
+for a smooth browsing experience.
+</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🎯</div>
+<h3>Custom Development</h3>
+<p>
+Your website is created according to your actual
+business requirements.
+</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">✨</div>
+<h3>Smooth Animations</h3>
+<p>
+Professional motion, hover effects, transitions,
+particles and interaction details.
+</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🤝</div>
+<h3>Direct Support</h3>
+<p>
+Easy communication and requirement-based changes
+during your project.
+</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section wrap">
+
+<div class="section-heading">
+
+<div class="kicker">
+SIMPLE PROCESS
+</div>
+
+<h2>
+How It Works
+</h2>
+
+<p>
+From your first idea to a live website.
+</p>
+
+</div>
+
+
+<div class="process">
+
+<div class="process-card">
+
+<div class="process-circle">01</div>
+
+<h3>Tell Us</h3>
+
+<p>
+Tell us what type of website you need.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="process-circle">02</div>
+
+<h3>Design</h3>
+
+<p>
+We create the visual direction and layout.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="process-circle">03</div>
+
+<h3>Develop</h3>
+
+<p>
+The approved design is converted into a working website.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="process-circle">04</div>
+
+<h3>Review</h3>
+
+<p>
+You review the website and share required changes.
+</p>
+
+</div>
+
+<div class="process-card">
+
+<div class="process-circle">05</div>
+
+<h3>Launch</h3>
+
+<p>
+Your final website goes live.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TECHNOLOGY -->
+<section class="section wrap">
+
+<div class="section-heading">
+
+<div class="kicker">
+TECHNOLOGY
+</div>
+
+<h2>
+Modern Technology Stack
+</h2>
+
+<p>
+Technologies can be selected according to project requirements.
+</p>
+
+</div>
+
+<div class="tech-grid">
+
+<span class="tech">HTML5</span>
+<span class="tech">CSS3</span>
+<span class="tech">JavaScript</span>
+<span class="tech">Responsive UI</span>
+<span class="tech">Web Apps</span>
+<span class="tech">API Integration</span>
+<span class="tech">Database</span>
+<span class="tech">Google Sites</span>
+<span class="tech">Custom UI</span>
+<span class="tech">SEO</span>
+<span class="tech">Performance</span>
+
+</div>
+
+</section>
+
+
+<!-- FAQ -->
+<section class="section wrap">
+
+<div class="section-heading">
+
+<div class="kicker">
+FAQ
+</div>
+
+<h2>
+Common Questions
+</h2>
+
+</div>
+
+<div class="faq">
+
+<div class="faq-item">
+
+<button class="faq-question">
+Website starting price कितना है?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+Professional websites ₹3,000 से शुरू होते हैं। Final price
+requirements, pages, features and complexity के अनुसार तय होगा।
+</p>
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question">
+क्या mobile में website सही चलेगी?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+हाँ। Websites को responsive बनाया जाता है ताकि mobile,
+tablet और desktop पर layout properly adjust हो।
+</p>
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question">
+क्या custom design मिल सकता है?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+हाँ। Existing template की जगह आपकी requirement और brand
+के अनुसार custom design बनाया जा सकता है।
+</p>
+</div>
+
+</div>
+
+
+<div class="faq-item">
+
+<button class="faq-question">
+क्या website बनने के बाद changes हो सकते हैं?
+<span>+</span>
+</button>
+
+<div class="faq-answer">
+<p>
+हाँ। Project के अनुसार required revisions और updates discuss
+किए जा सकते हैं।
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="section wrap">
+
+<div class="cta">
+
+<div class="kicker">
+READY TO START?
+</div>
+
+<h2>
+Let's Build Something Amazing.
+</h2>
+
+<p>
+आपके idea को एक professional digital experience में बदलते हैं।
+Starting price सिर्फ ₹3,000 से।
+</p>
+
+<button class="cta-btn" onclick="openForm()">
+🚀 Start Your Project →
+</button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="wrap footer-inner">
+
+<div class="footer-brand">
+© 2026 JHA APP
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="services.html">Services</a>
+<a href="projects.html">Projects</a>
+<a href="about.html">About</a>
+<a href="pricing.html">Pricing</a>
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* MOUSE SPOTLIGHT */
+
+window.addEventListener("pointermove",function(e){
+
+document.documentElement.style.setProperty(
+"--mx",
+e.clientX+"px"
+);
+
+document.documentElement.style.setProperty(
+"--my",
+e.clientY+"px"
+);
+
+},{passive:true});
+
+
+/* CLICK CHINGARI */
+
+function clickBurst(target){
+
+const r=target.getBoundingClientRect();
+
+const x=r.left+r.width/2;
+const y=r.top+r.height/2;
+
+for(let i=0;i<9;i++){
+
+const s=document.createElement("span");
+
+s.className="spark";
+
+s.style.left=x+"px";
+s.style.top=y+"px";
+
+document.body.appendChild(s);
+
+const angle=Math.PI*2*i/9;
+const distance=25+Math.random()*35;
+
+gsap.to(s,{
+ x:Math.cos(angle)*distance,
+ y:Math.sin(angle)*distance,
+ scale:.1,
+ opacity:0,
+ duration:.55,
+ ease:"power2.out",
+ onComplete:()=>s.remove()
+});
+
+}
+
+}
+
+
+/* CATEGORY FILTER */
+
+const categoryButtons=
+document.querySelectorAll(".category");
+
+const serviceCards=
+document.querySelectorAll(".service-card");
+
+categoryButtons.forEach(button=>{
+
+button.addEventListener("click",function(){
+
+categoryButtons.forEach(b=>
+b.classList.remove("active")
+);
+
+this.classList.add("active");
+
+const filter=this.dataset.filter;
+
+serviceCards.forEach(card=>{
+
+if(
+filter==="all" ||
+card.dataset.category===filter
+){
+
+gsap.to(card,{
+opacity:1,
+scale:1,
+duration:.3,
+display:"block"
+});
+
+}else{
+
+gsap.to(card,{
+opacity:0,
+scale:.92,
+duration:.25,
+onComplete:()=>{
+card.style.display="none";
+}
+});
+
+}
+
+});
+
+clickBurst(this);
+
+});
+
+});
+
+
+/* FAQ */
+
+document.querySelectorAll(".faq-question")
+.forEach(question=>{
+
+question.addEventListener("click",function(){
+
+const answer=this.nextElementSibling;
+const icon=this.querySelector("span");
+
+if(answer.style.maxHeight){
+
+answer.style.maxHeight=null;
+icon.textContent="+";
+
+}else{
+
+document.querySelectorAll(".faq-answer")
+.forEach(a=>a.style.maxHeight=null);
+
+document.querySelectorAll(".faq-question span")
+.forEach(s=>s.textContent="+");
+
+answer.style.maxHeight=
+answer.scrollHeight+"px";
+
+icon.textContent="−";
+
+}
+
+clickBurst(this);
+
+});
+
+});
+
+
+/* FORM */
+
+function openForm(){
+
+const existing=document.getElementById("serviceForm");
+
+if(existing){
+existing.remove();
+}
+
+const overlay=document.createElement("div");
+
+overlay.id="serviceForm";
+
+overlay.style.cssText=`
+position:fixed;
+inset:0;
+z-index:5000;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:rgba(2,5,14,.80);
+backdrop-filter:blur(18px);
+`;
+
+overlay.innerHTML=`
+
+<div style="
+width:min(520px,100%);
+max-height:90vh;
+overflow:auto;
+padding:26px;
+border-radius:26px;
+border:1px solid rgba(69,234,255,.22);
+background:linear-gradient(145deg,rgba(13,21,43,.98),rgba(7,11,25,.98));
+box-shadow:0 40px 120px rgba(0,0,0,.65);
+position:relative;
+">
+
+<button id="closeServiceForm"
+style="
+position:absolute;
+right:14px;
+top:14px;
+width:38px;
+height:38px;
+border-radius:50%;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.04);
+color:white;
+font-size:22px;
+cursor:pointer;
+">×</button>
+
+<div style="
+color:#45eaff;
+font-size:10px;
+font-weight:900;
+letter-spacing:.16em;
+">
+JHA APP • PROJECT ENQUIRY
+</div>
+
+<h2 style="
+font-family:Space Grotesk;
+margin:8px 0;
+font-size:29px;
+">
+Let's Build Your Website
+</h2>
+
+<p style="
+color:#91a0b9;
+font-size:12px;
+line-height:1.6;
+">
+बस अपना नाम और mobile number भरें। बाकी requirements
+options से select कर सकते हैं।
+</p>
+
+<form id="serviceContactForm">
+
+<label style="display:block;margin:12px 0 6px;font-size:11px">
+Name *
+</label>
+
+<input
+id="formName"
+required
+placeholder="Your Name"
+style="
+width:100%;
+height:45px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.045);
+color:white;
+padding:10px;
+"
+>
+
+<label style="display:block;margin:12px 0 6px;font-size:11px">
+Mobile Number *
+</label>
+
+<input
+id="formPhone"
+required
+maxlength="10"
+inputmode="numeric"
+placeholder="10 Digit Mobile Number"
+style="
+width:100%;
+height:45px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.045);
+color:white;
+padding:10px;
+"
+>
+
+<label style="display:block;margin:12px 0 6px;font-size:11px">
+Website Type
+</label>
+
+<select
+id="formType"
+style="
+width:100%;
+height:45px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.12);
+background:#0c1225;
+color:white;
+padding:10px;
+"
+>
+
+<option>Business Website</option>
+<option>Portfolio Website</option>
+<option>E-Commerce Website</option>
+<option>Web Application</option>
+<option>UI / UX Design</option>
+<option>Landing Page</option>
+<option>School Website</option>
+<option>Hotel / Temple Website</option>
+
+</select>
+
+<label style="display:block;margin:12px 0 6px;font-size:11px">
+Additional Requirement
+</label>
+
+<textarea
+id="formMessage"
+placeholder="Anything else you want to tell us?"
+style="
+width:100%;
+height:80px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.045);
+color:white;
+padding:10px;
+resize:vertical;
+"
+></textarea>
+
+<button
+type="submit"
+style="
+width:100%;
+height:50px;
+margin-top:15px;
+border-radius:14px;
+border:1px solid rgba(69,234,255,.35);
+background:linear-gradient(105deg,#176cff,#734cff);
+color:white;
+font-weight:900;
+cursor:pointer;
+"
+>
+CONTINUE TO WHATSAPP →
+</button>
+
+</form>
+
+</div>
+`;
+
+document.body.appendChild(overlay);
+
+document.getElementById("closeServiceForm")
+.addEventListener("click",()=>{
+ overlay.remove();
+});
+
+overlay.addEventListener("click",e=>{
+ if(e.target===overlay)overlay.remove();
+});
+
+
+document.getElementById("serviceContactForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const name=
+document.getElementById("formName").value.trim();
+
+const phone=
+document.getElementById("formPhone").value.trim();
+
+const type=
+document.getElementById("formType").value;
+
+const message=
+document.getElementById("formMessage").value.trim();
+
+if(!/^[0-9]{10}$/.test(phone)){
+
+alert("Please enter a valid 10 digit mobile number.");
+
+return;
+
+}
+
+const text=
+`Hello JHA APP 👋
+
+I want to get a website developed.
+
+Name: ${name}
+Mobile: ${phone}
+
+Website Type: ${type}
+
+Additional Requirement:
+${message || "Not specified"}
+
+Starting Price: ₹3,000
+
+Please contact me with the details.`;
+
+window.open(
+"https://wa.me/919204917400?text="+
+encodeURIComponent(text),
+"_blank"
+);
+
+overlay.remove();
+
+});
+
+}
+
+
+/* CLICK EFFECT ON BUTTONS */
+
+document.querySelectorAll("button,a")
+.forEach(el=>{
+
+el.addEventListener("click",function(){
+
+clickBurst(this);
+
+});
+
+});
+
+
+/* INTRO ANIMATION */
+
+gsap.from(".page-hero > *",{
+y:25,
+opacity:0,
+duration:.7,
+stagger:.1
+});
+
+gsap.from(".service-card",{
+y:35,
+opacity:0,
+duration:.65,
+stagger:.08,
+delay:.25
+});
+
+gsap.from(".why-card",{
+y:25,
+opacity:0,
+duration:.6,
+stagger:.08,
+scrollTrigger:{
+trigger:".why-grid",
+start:"top 85%"
+}
+});
+
+</script>
+
+</body>
+</html>

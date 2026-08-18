@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FAQ | JHA APP</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at 15% 15%,rgba(77,110,255,.18),transparent 30%),
+    radial-gradient(circle at 85% 25%,rgba(170,70,255,.16),transparent 30%),
+    radial-gradient(circle at 50% 90%,rgba(0,210,255,.10),transparent 35%),
+    #050711;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.16) 1px,transparent 1px);
+  background-size:90px 90px;
+  opacity:.12;
+}
+
+/* MAIN */
+.faq-page{
+  max-width:1150px;
+  margin:auto;
+  padding:75px 22px 70px;
+  position:relative;
+  z-index:1;
+}
+
+/* HERO */
+.faq-hero{
+  text-align:center;
+  margin-bottom:55px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 17px;
+  border:1px solid rgba(120,140,255,.3);
+  background:rgba(255,255,255,.055);
+  backdrop-filter:blur(15px);
+  border-radius:50px;
+  color:#b9c5ff;
+  font-size:13px;
+  letter-spacing:.5px;
+  box-shadow:0 0 25px rgba(80,100,255,.12);
+}
+
+.badge span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#55eaff;
+  box-shadow:0 0 12px #55eaff;
+}
+
+h1{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.05;
+  margin:22px 0 18px;
+  letter-spacing:-2px;
+  background:linear-gradient(
+    90deg,
+    #fff,
+    #9fb1ff,
+    #72eaff
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero-text{
+  max-width:690px;
+  margin:auto;
+  color:#aab1c7;
+  font-size:16px;
+  line-height:1.8;
+}
+
+/* FAQ */
+.faq-container{
+  max-width:900px;
+  margin:auto;
+}
+
+.faq-item{
+  margin-bottom:16px;
+  border:1px solid rgba(255,255,255,.09);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.25),
+    inset 0 1px rgba(255,255,255,.05);
+  transition:.35s ease;
+}
+
+.faq-item:hover{
+  border-color:rgba(110,150,255,.28);
+  transform:translateY(-2px);
+  box-shadow:
+    0 18px 50px rgba(20,60,180,.15),
+    inset 0 1px rgba(255,255,255,.07);
+}
+
+.question{
+  width:100%;
+  border:0;
+  outline:0;
+  background:none;
+  color:#fff;
+  padding:23px 25px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  text-align:left;
+  cursor:pointer;
+  font-size:16px;
+  font-weight:600;
+}
+
+.question-number{
+  color:#728cff;
+  font-size:13px;
+  min-width:30px;
+}
+
+.question-text{
+  flex:1;
+}
+
+.icon{
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(130,150,255,.25);
+  background:rgba(100,120,255,.08);
+  color:#9eafff;
+  font-size:20px;
+  transition:.35s ease;
+}
+
+.answer{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .45s ease;
+}
+
+.answer-inner{
+  padding:0 70px 23px 80px;
+  color:#aeb5ca;
+  line-height:1.8;
+  font-size:14px;
+}
+
+.faq-item.active .icon{
+  transform:rotate(45deg);
+  background:rgba(100,130,255,.16);
+  color:#70eaff;
+}
+
+.faq-item.active{
+  border-color:rgba(100,150,255,.32);
+}
+
+/* CTA */
+.faq-cta{
+  margin:65px auto 0;
+  max-width:900px;
+  padding:42px 30px;
+  text-align:center;
+  border-radius:25px;
+  border:1px solid rgba(120,140,255,.2);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(100,100,255,.15),transparent 55%),
+    rgba(255,255,255,.035);
+  backdrop-filter:blur(20px);
+}
+
+.faq-cta h2{
+  font-size:28px;
+  margin-bottom:12px;
+}
+
+.faq-cta p{
+  color:#9fa7bd;
+  font-size:14px;
+  line-height:1.7;
+  margin-bottom:25px;
+}
+
+.cta-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:13px 24px;
+  border-radius:12px;
+  text-decoration:none;
+  color:#fff;
+  font-size:14px;
+  font-weight:600;
+  background:linear-gradient(135deg,#536dff,#7a42e8);
+  box-shadow:
+    0 8px 30px rgba(75,85,255,.25);
+  transition:.3s ease;
+}
+
+.cta-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:
+    0 12px 35px rgba(75,100,255,.4);
+}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  margin-top:55px;
+  padding-top:25px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#687086;
+  font-size:12px;
+}
+
+/* MOBILE */
+@media(max-width:650px){
+
+  .faq-page{
+    padding:55px 15px;
+  }
+
+  h1{
+    letter-spacing:-1px;
+  }
+
+  .hero-text{
+    font-size:14px;
+  }
+
+  .question{
+    padding:19px 16px;
+    font-size:14px;
+  }
+
+  .question-number{
+    min-width:24px;
+  }
+
+  .answer-inner{
+    padding:0 20px 20px 60px;
+    font-size:13px;
+  }
+
+  .faq-cta{
+    padding:32px 20px;
+  }
+
+  .faq-cta h2{
+    font-size:23px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="faq-page">
+
+  <!-- HERO -->
+  <section class="faq-hero">
+
+    <div class="badge">
+      <span></span>
+      JHA APP • FAQ
+    </div>
+
+    <h1>Frequently Asked<br>Questions</h1>
+
+    <p class="hero-text">
+      Everything you need to know about JHA APP, our services,
+      projects, pricing and the process of building your website.
+    </p>
+
+  </section>
+
+
+  <!-- FAQ -->
+  <section class="faq-container">
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">01</span>
+        <span class="question-text">
+          What is JHA APP?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          JHA APP is a digital website development service focused on
+          creating modern, responsive and professional websites for
+          businesses, schools, temples, hotels, organizations and
+          personal projects.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">02</span>
+        <span class="question-text">
+          What type of websites do you build?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          We build business websites, school websites, temple websites,
+          hotel websites, portfolio websites, landing pages,
+          service websites and custom website solutions.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">03</span>
+        <span class="question-text">
+          Are the websites mobile responsive?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          Yes. Every website is designed to work across desktop,
+          tablet and mobile devices with a responsive layout.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">04</span>
+        <span class="question-text">
+          How much does a website cost?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          Website pricing depends on the type of website, number of
+          pages, features, design requirements and customization.
+          JHA APP offers different plans starting from affordable
+          basic websites and also provides custom solutions.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">05</span>
+        <span class="question-text">
+          Can I request a custom website?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          Absolutely. You can share your requirements and JHA APP can
+          create a website based on your preferred design, pages,
+          functionality and business needs.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">06</span>
+        <span class="question-text">
+          How does the website development process work?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          The general process is simple:
+          discuss your requirements, plan the website,
+          design the interface, develop the website,
+          review the result and finally launch it.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">07</span>
+        <span class="question-text">
+          How long does it take to build a website?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          The timeline depends on the project's size and complexity.
+          A simple website can be completed faster, while larger
+          websites with custom features require more development time.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">08</span>
+        <span class="question-text">
+          Can I provide my own images and content?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          Yes. You can provide your logo, images, text, contact details,
+          branding and other content that you want to use on the website.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">09</span>
+        <span class="question-text">
+          Can my website be updated later?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          Yes. Websites can be updated with new pages, content,
+          images, services, projects and additional functionality
+          whenever required.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="faq-item">
+      <button class="question">
+        <span class="question-number">10</span>
+        <span class="question-text">
+          How can I start my project?
+        </span>
+        <span class="icon">+</span>
+      </button>
+
+      <div class="answer">
+        <div class="answer-inner">
+          You can start by contacting JHA APP and sharing your project
+          requirements. We can then discuss the suitable plan,
+          features, timeline and next steps.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- CTA -->
+  <section class="faq-cta">
+
+    <h2>Still Have Questions?</h2>
+
+    <p>
+      Tell us what you need and let's discuss your website project.
+    </p>
+
+    <a href="#" class="cta-btn">
+      Start Your Project →
+    </a>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <div class="footer">
+    © 2026 JHA APP • All Rights Reserved
+  </div>
+
+</div>
+
+
+<script>
+
+const questions = document.querySelectorAll(".question");
+
+questions.forEach(question => {
+
+  question.addEventListener("click", () => {
+
+    const item = question.parentElement;
+    const answer = item.querySelector(".answer");
+
+    document.querySelectorAll(".faq-item").forEach(other => {
+
+      if(other !== item){
+
+        other.classList.remove("active");
+
+        const otherAnswer =
+          other.querySelector(".answer");
+
+        otherAnswer.style.maxHeight = null;
+      }
+
+    });
+
+    item.classList.toggle("active");
+
+    if(item.classList.contains("active")){
+      answer.style.maxHeight =
+        answer.scrollHeight + "px";
+    }else{
+      answer.style.maxHeight = null;
+    }
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>

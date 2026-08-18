@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="About JHA APP - Modern Digital Experiences">
+<title>About — JHA APP</title>
+
+<style>
+:root{
+  --bg:#050713;
+  --text:#f5f7ff;
+  --muted:#aeb6cf;
+  --line:rgba(255,255,255,.11);
+  --glass:rgba(255,255,255,.055);
+  --blue:#5ea7ff;
+  --purple:#9b72ff;
+  --cyan:#55e6ff;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(94,167,255,.16),transparent 28%),
+    radial-gradient(circle at 85% 18%,rgba(155,114,255,.14),transparent 30%),
+    radial-gradient(circle at 50% 80%,rgba(85,230,255,.08),transparent 28%),
+    var(--bg);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(rgba(255,255,255,.16) 1px,transparent 1px);
+  background-size:55px 55px;
+  opacity:.07;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.container{
+  width:min(1180px,92%);
+  margin:auto;
+}
+
+/* HEADER */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(5,7,19,.72);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
+
+.nav{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+
+.logo{
+  font-size:24px;
+  font-weight:900;
+}
+
+.logo span{
+  color:var(--cyan);
+}
+
+nav{
+  display:flex;
+  gap:25px;
+}
+
+nav a{
+  font-size:14px;
+  color:#cbd2e8;
+  transition:.25s;
+}
+
+nav a:hover,
+nav a.active{
+  color:#fff;
+}
+
+/* HERO */
+
+.hero{
+  min-height:600px;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  padding:90px 0;
+}
+
+.eyebrow{
+  display:inline-flex;
+  padding:8px 14px;
+  border:1px solid rgba(94,167,255,.25);
+  border-radius:999px;
+  background:rgba(94,167,255,.08);
+  color:#b9d7ff;
+  font-size:13px;
+  margin-bottom:22px;
+}
+
+h1{
+  font-size:clamp(45px,7vw,82px);
+  line-height:1.02;
+  letter-spacing:-3px;
+}
+
+.gradient{
+  background:linear-gradient(
+    90deg,
+    #fff,
+    #9dc9ff,
+    #c29fff,
+    #75eaff
+  );
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  max-width:720px;
+  margin:24px auto;
+  color:var(--muted);
+  font-size:18px;
+}
+
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-top:30px;
+}
+
+.btn{
+  padding:13px 21px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:var(--glass);
+  font-weight:700;
+  font-size:14px;
+  transition:.25s;
+}
+
+.btn.primary{
+  background:linear-gradient(
+    135deg,
+    #438fff,
+    #8b62ff
+  );
+  border:0;
+  box-shadow:0 12px 35px rgba(83,111,255,.25);
+}
+
+.btn:hover{
+  transform:translateY(-3px);
+}
+
+/* SECTIONS */
+
+section{
+  padding:85px 0;
+}
+
+.section-head{
+  text-align:center;
+  margin-bottom:45px;
+}
+
+.tag{
+  color:#79dfff;
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-weight:800;
+}
+
+.section-head h2{
+  font-size:clamp(30px,4vw,48px);
+  margin:8px 0;
+}
+
+.section-head p{
+  color:var(--muted);
+  max-width:680px;
+  margin:auto;
+}
+
+/* CARDS */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card{
+  padding:27px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+  border-radius:20px;
+  backdrop-filter:blur(14px);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(120,180,255,.28);
+  box-shadow:0 18px 55px rgba(0,0,0,.25);
+}
+
+.icon{
+  font-size:27px;
+  margin-bottom:14px;
+}
+
+.card h3{
+  font-size:19px;
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* STORY */
+
+.story{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:35px;
+  align-items:center;
+}
+
+.story-box{
+  padding:38px;
+  border-radius:25px;
+  border:1px solid var(--line);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(94,167,255,.10),
+      rgba(155,114,255,.08),
+      rgba(255,255,255,.03)
+    );
+}
+
+.story-box h3{
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.story-box p{
+  color:var(--muted);
+  margin-bottom:15px;
+}
+
+/* PROCESS */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.step{
+  text-align:center;
+  padding:25px 14px;
+  border:1px solid var(--line);
+  background:var(--glass);
+  border-radius:18px;
+}
+
+.num{
+  font-size:12px;
+  color:#7bdfff;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.step h3{
+  font-size:16px;
+  margin:10px 0 5px;
+}
+
+.step p{
+  font-size:12px;
+  color:var(--muted);
+}
+
+/* VISION */
+
+.vision,
+.cta{
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:60px 30px;
+  text-align:center;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(94,167,255,.08),
+      rgba(155,114,255,.08)
+    );
+}
+
+.vision p{
+  max-width:720px;
+  margin:16px auto;
+  color:var(--muted);
+  font-size:17px;
+}
+
+/* CTA */
+
+.cta{
+  margin:20px auto 80px;
+}
+
+/* FOOTER */
+
+footer{
+  border-top:1px solid var(--line);
+  padding:50px 0 25px;
+  background:rgba(0,0,0,.18);
+}
+
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:35px;
+}
+
+.footer-title{
+  font-weight:800;
+  margin-bottom:14px;
+}
+
+.footer p,
+.footer a{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer a{
+  display:block;
+  margin:7px 0;
+}
+
+.copy{
+  border-top:1px solid var(--line);
+  margin-top:35px;
+  padding-top:20px;
+  text-align:center;
+  color:#747d96;
+  font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  nav{
+    display:none;
+  }
+
+  .grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .story{
+    grid-template-columns:1fr;
+  }
+
+  .steps{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .footer-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+@media(max-width:520px){
+
+  h1{
+    letter-spacing:-2px;
+  }
+
+  .grid,
+  .steps,
+  .footer-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    min-height:540px;
+    padding-top:65px;
+  }
+
+  .hero p{
+    font-size:15px;
+  }
+
+  section{
+    padding:65px 0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container nav">
+
+<a class="logo" href="index.html">
+JHA <span>APP</span>
+</a>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a class="active" href="About.html">
+About
+</a>
+
+<a href="Services.html">
+Services
+</a>
+
+<a href="Projects.html">
+Projects
+</a>
+
+<a href="Pricing.html">
+Pricing
+</a>
+
+<a href="FAQ.html">
+FAQ
+</a>
+
+<a href="Contact.html">
+Contact
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<main>
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="eyebrow">
+✦ ABOUT JHA APP
+</div>
+
+<h1>
+We Build
+<span class="gradient">
+Digital Experiences.
+</span>
+</h1>
+
+<p>
+JHA APP turns ideas into modern, responsive and purposeful
+digital experiences — built around your requirements,
+audience and goals.
+</p>
+
+<div class="buttons">
+
+<a class="btn primary"
+href="Start-Your-Project.html">
+Start Your Project →
+</a>
+
+<a class="btn"
+href="Projects.html">
+Explore Projects
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= WHO WE ARE ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">
+Who We Are
+</div>
+
+<h2>
+More Than Just a Website
+</h2>
+
+<p>
+We create digital experiences that look professional,
+work smoothly and communicate your identity clearly.
+</p>
+
+</div>
+
+
+<div class="story">
+
+<div class="story-box">
+
+<h3>
+Ideas deserve a digital identity.
+</h3>
+
+<p>
+JHA APP is a digital development studio focused on
+custom website experiences for businesses, schools,
+temples, hotels, organizations and personal brands.
+</p>
+
+<p>
+Our approach combines clean UI, responsive development,
+thoughtful interactions and practical functionality.
+</p>
+
+</div>
+
+
+<div class="grid"
+style="grid-template-columns:1fr;">
+
+<div class="card">
+
+<div class="icon">◈</div>
+
+<h3>
+Custom Design
+</h3>
+
+<p>
+Design and structure shaped around the project's
+actual requirements.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">▣</div>
+
+<h3>
+Responsive Experience
+</h3>
+
+<p>
+A consistent experience across desktop,
+tablet and mobile.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">✦</div>
+
+<h3>
+Purpose Driven
+</h3>
+
+<p>
+Every section has a reason — from first impression
+to final CTA.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= EXPERTISE ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">
+What We Do
+</div>
+
+<h2>
+Our Digital Expertise
+</h2>
+
+<p>
+A flexible range of digital solutions for
+different types of projects.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="icon">🌐</div>
+
+<h3>
+Website Development
+</h3>
+
+<p>
+Modern websites designed for performance,
+usability and responsiveness.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🎨</div>
+
+<h3>
+UI / UX Design
+</h3>
+
+<p>
+Clean interfaces with strong visual hierarchy
+and intuitive user flows.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🏢</div>
+
+<h3>
+Business Websites
+</h3>
+
+<p>
+Professional digital presence for businesses
+and growing brands.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🏫</div>
+
+<h3>
+School & Institutions
+</h3>
+
+<p>
+Informative and organized experiences for
+educational organizations.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🛕</div>
+
+<h3>
+Temple Websites
+</h3>
+
+<p>
+Digital spaces for temples, trusts and
+religious organizations.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🏨</div>
+
+<h3>
+Hotel & Hospitality
+</h3>
+
+<p>
+Visual-first websites that present places,
+services and experiences.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PROCESS ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">
+Our Process
+</div>
+
+<h2>
+From Idea to Launch
+</h2>
+
+<p>
+A clear process keeps the project focused
+from first conversation to final delivery.
+</p>
+
+</div>
+
+
+<div class="steps">
+
+<div class="step">
+
+<div class="num">
+01
+</div>
+
+<h3>
+Understand
+</h3>
+
+<p>
+Requirements and goals.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="num">
+02
+</div>
+
+<h3>
+Plan
+</h3>
+
+<p>
+Structure and features.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="num">
+03
+</div>
+
+<h3>
+Design
+</h3>
+
+<p>
+UI and visual direction.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="num">
+04
+</div>
+
+<h3>
+Develop
+</h3>
+
+<p>
+Responsive implementation.
+</p>
+
+</div>
+
+
+<div class="step">
+
+<div class="num">
+05
+</div>
+
+<h3>
+Launch
+</h3>
+
+<p>
+Testing and delivery.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= WHY JHA APP ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<div class="tag">
+Why JHA APP
+</div>
+
+<h2>
+Built Around Your Requirements
+</h2>
+
+<p>
+Our priorities stay focused on a useful
+and professional final experience.
+</p>
+
+</div>
+
+
+<div class="grid">
+
+<div class="card">
+
+<div class="icon">⚙</div>
+
+<h3>
+Custom
+</h3>
+
+<p>
+Solutions shaped around your project
+instead of a fixed template.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">◉</div>
+
+<h3>
+Responsive
+</h3>
+
+<p>
+Polished and usable across different
+screen sizes.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⌁</div>
+
+<h3>
+Transparent
+</h3>
+
+<p>
+Clear project direction, scope
+and communication.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">✧</div>
+
+<h3>
+Modern
+</h3>
+
+<p>
+Contemporary interfaces, interactions
+and visual systems.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">↗</div>
+
+<h3>
+Scalable
+</h3>
+
+<p>
+Structure that can evolve as your
+requirements grow.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">◌</div>
+
+<h3>
+Support
+</h3>
+
+<p>
+Practical assistance around the
+delivered digital experience.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= VISION ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="vision">
+
+<div class="section-head"
+style="margin-bottom:0;">
+
+<div class="tag">
+Our Vision
+</div>
+
+<h2>
+Make Every Idea Feel Digital.
+</h2>
+
+</div>
+
+<p>
+Our vision is to make professional digital experiences
+more accessible to businesses and organizations of every
+size — from a simple idea to a complete digital presence.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FINAL CTA ================= -->
+
+<div class="container">
+
+<section class="cta">
+
+<div class="section-head"
+style="margin-bottom:0;">
+
+<div class="tag">
+Let's Build
+</div>
+
+<h2>
+Have an Idea?
+</h2>
+
+<p>
+Tell us what you need and let's turn your idea
+into a professional digital experience.
+</p>
+
+</div>
+
+
+<div class="buttons">
+
+<a class="btn primary"
+href="Start-Your-Project.html">
+Start Your Project →
+</a>
+
+<a class="btn"
+href="Contact.html">
+Contact JHA APP
+</a>
+
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container footer-grid">
+
+
+<div class="footer">
+
+<div class="logo">
+JHA <span>APP</span>
+</div>
+
+<p style="margin-top:12px;max-width:280px;">
+Modern digital experiences built around
+your requirements.
+</p>
+
+</div>
+
+
+<div class="footer">
+
+<div class="footer-title">
+Quick Links
+</div>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="About.html">
+About
+</a>
+
+<a href="Services.html">
+Services
+</a>
+
+<a href="Projects.html">
+Projects
+</a>
+
+<a href="Pricing.html">
+Pricing
+</a>
+
+</div>
+
+
+<div class="footer">
+
+<div class="footer-title">
+Explore
+</div>
+
+<a href="FAQ.html">
+FAQ
+</a>
+
+<a href="Start-Your-Project.html">
+Start Your Project
+</a>
+
+<a href="Contact.html">
+Contact
+</a>
+
+</div>
+
+
+<div class="footer">
+
+<div class="footer-title">
+Legal
+</div>
+
+<a href="Privacy-Policy.html">
+Privacy Policy
+</a>
+
+<a href="Terms.html">
+Terms & Conditions
+</a>
+
+</div>
+
+</div>
+
+
+<div class="container copy">
+
+© 2026 JHA APP. All rights reserved.
+
+</div>
+
+</footer>
+
+</body>
+</html>

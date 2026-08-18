@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pricing | JHA APP</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+}
+
+body{
+  background:
+    radial-gradient(circle at 12% 15%,rgba(75,100,255,.18),transparent 30%),
+    radial-gradient(circle at 88% 20%,rgba(170,65,255,.16),transparent 30%),
+    radial-gradient(circle at 50% 90%,rgba(0,220,255,.10),transparent 35%),
+    #050711;
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.15) 1px,transparent 1px);
+  background-size:90px 90px;
+  opacity:.12;
+}
+
+.pricing-page{
+  max-width:1250px;
+  margin:auto;
+  padding:75px 20px 70px;
+  position:relative;
+  z-index:1;
+}
+
+/* HERO */
+
+.hero{
+  text-align:center;
+  margin-bottom:60px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 17px;
+  border:1px solid rgba(120,140,255,.3);
+  background:rgba(255,255,255,.055);
+  backdrop-filter:blur(15px);
+  border-radius:50px;
+  color:#bdc7ff;
+  font-size:13px;
+  letter-spacing:.5px;
+}
+
+.badge span{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#55eaff;
+  box-shadow:0 0 13px #55eaff;
+}
+
+h1{
+  margin:22px 0 18px;
+  font-size:clamp(40px,6vw,68px);
+  line-height:1.05;
+  letter-spacing:-2px;
+  background:linear-gradient(
+    90deg,
+    #fff,
+    #a5b4ff,
+    #6cecff
+  );
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+  max-width:680px;
+  margin:auto;
+  color:#aab1c5;
+  font-size:16px;
+  line-height:1.8;
+}
+
+/* PRICING GRID */
+
+.pricing-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  align-items:stretch;
+}
+
+.card{
+  position:relative;
+  padding:30px 24px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.09);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.075),
+      rgba(255,255,255,.025)
+    );
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  box-shadow:
+    0 18px 55px rgba(0,0,0,.25),
+    inset 0 1px rgba(255,255,255,.05);
+  transition:.35s ease;
+}
+
+.card:hover{
+  transform:translateY(-7px);
+  border-color:rgba(110,150,255,.3);
+  box-shadow:
+    0 25px 65px rgba(40,70,190,.18),
+    inset 0 1px rgba(255,255,255,.08);
+}
+
+.card.popular{
+  border-color:rgba(105,130,255,.55);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(90,100,255,.18),
+      transparent 45%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.025)
+    );
+  box-shadow:
+    0 25px 75px rgba(70,80,255,.2),
+    inset 0 1px rgba(255,255,255,.1);
+}
+
+.popular-tag{
+  position:absolute;
+  top:-13px;
+  left:50%;
+  transform:translateX(-50%);
+  padding:7px 15px;
+  border-radius:30px;
+  background:linear-gradient(135deg,#536dff,#8a45e8);
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.5px;
+  white-space:nowrap;
+  box-shadow:0 7px 25px rgba(75,90,255,.3);
+}
+
+.plan-number{
+  color:#7085ff;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:1px;
+}
+
+.plan-name{
+  font-size:25px;
+  margin-top:9px;
+  margin-bottom:9px;
+}
+
+.plan-desc{
+  color:#858da5;
+  font-size:13px;
+  min-height:42px;
+  line-height:1.6;
+}
+
+.price{
+  margin:23px 0 5px;
+  font-size:36px;
+  font-weight:750;
+  letter-spacing:-1px;
+}
+
+.price small{
+  font-size:12px;
+  color:#7f879e;
+  font-weight:400;
+}
+
+.price-note{
+  color:#727b93;
+  font-size:11px;
+  min-height:20px;
+}
+
+/* FEATURES */
+
+.features{
+  list-style:none;
+  margin:25px 0;
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:20px;
+}
+
+.features li{
+  display:flex;
+  gap:10px;
+  color:#b2b8ca;
+  font-size:13px;
+  line-height:1.5;
+  margin:13px 0;
+}
+
+.features li:before{
+  content:"✓";
+  color:#6cecff;
+  font-weight:bold;
+  flex-shrink:0;
+}
+
+/* BUTTON */
+
+.plan-btn{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:13px 15px;
+  border-radius:12px;
+  border:1px solid rgba(130,150,255,.22);
+  background:rgba(255,255,255,.045);
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+  transition:.3s ease;
+}
+
+.plan-btn:hover{
+  background:rgba(100,120,255,.14);
+  border-color:rgba(110,150,255,.4);
+  transform:translateY(-2px);
+}
+
+.popular .plan-btn{
+  background:linear-gradient(135deg,#536dff,#7945e9);
+  border:none;
+  box-shadow:0 8px 28px rgba(70,85,255,.25);
+}
+
+.popular .plan-btn:hover{
+  box-shadow:0 12px 35px rgba(70,85,255,.4);
+}
+
+/* CUSTOM CTA */
+
+.custom-box{
+  margin-top:22px;
+  padding:38px 30px;
+  border-radius:24px;
+  border:1px solid rgba(120,140,255,.17);
+  background:
+    radial-gradient(
+      circle at 85% 30%,
+      rgba(100,80,255,.14),
+      transparent 35%
+    ),
+    rgba(255,255,255,.035);
+  backdrop-filter:blur(20px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:30px;
+}
+
+.custom-content h2{
+  font-size:27px;
+  margin-bottom:10px;
+}
+
+.custom-content p{
+  color:#979fb5;
+  font-size:14px;
+  line-height:1.7;
+  max-width:650px;
+}
+
+.custom-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px 23px;
+  border-radius:12px;
+  color:#fff;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:650;
+  background:linear-gradient(135deg,#536dff,#7845e7);
+  white-space:nowrap;
+  box-shadow:0 10px 30px rgba(70,80,255,.23);
+  transition:.3s ease;
+}
+
+.custom-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 38px rgba(70,80,255,.4);
+}
+
+/* NOTE */
+
+.pricing-note{
+  text-align:center;
+  margin:35px auto 0;
+  max-width:750px;
+  color:#737c94;
+  font-size:12px;
+  line-height:1.7;
+}
+
+/* FOOTER */
+
+.footer{
+  margin-top:55px;
+  padding-top:25px;
+  text-align:center;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#687086;
+  font-size:12px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px){
+  .pricing-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:650px){
+
+  .pricing-page{
+    padding:55px 15px;
+  }
+
+  h1{
+    letter-spacing:-1px;
+  }
+
+  .hero p{
+    font-size:14px;
+  }
+
+  .pricing-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  .card{
+    padding:28px 22px;
+  }
+
+  .custom-box{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:30px 22px;
+  }
+
+  .custom-btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="pricing-page">
+
+  <!-- HERO -->
+
+  <section class="hero">
+
+    <div class="badge">
+      <span></span>
+      JHA APP • PRICING
+    </div>
+
+    <h1>Simple & Transparent<br>Pricing</h1>
+
+    <p>
+      Choose a plan that fits your project. Every website is designed
+      to look professional, work smoothly and provide a great experience
+      across devices.
+    </p>
+
+  </section>
+
+
+  <!-- PRICING -->
+
+  <section class="pricing-grid">
+
+    <!-- BASIC -->
+
+    <div class="card">
+
+      <div class="plan-number">01</div>
+
+      <h2 class="plan-name">Basic</h2>
+
+      <p class="plan-desc">
+        Perfect for individuals and small businesses
+        starting online.
+      </p>
+
+      <div class="price">
+        ₹3,000
+        <small>starting</small>
+      </div>
+
+      <div class="price-note">
+        One-time project price
+      </div>
+
+      <ul class="features">
+
+        <li>Up to 3–5 pages</li>
+        <li>Responsive design</li>
+        <li>Modern UI design</li>
+        <li>Contact section</li>
+        <li>Social media links</li>
+        <li>Basic animations</li>
+        <li>Mobile friendly</li>
+
+      </ul>
+
+      <a href="#" class="plan-btn">
+        Choose Basic →
+      </a>
+
+    </div>
+
+
+    <!-- BUSINESS -->
+
+    <div class="card">
+
+      <div class="plan-number">02</div>
+
+      <h2 class="plan-name">Business</h2>
+
+      <p class="plan-desc">
+        For businesses that need a stronger
+        professional presence.
+      </p>
+
+      <div class="price">
+        ₹7,000
+        <small>starting</small>
+      </div>
+
+      <div class="price-note">
+        One-time project price
+      </div>
+
+      <ul class="features">
+
+        <li>Up to 8–10 pages</li>
+        <li>Premium responsive UI</li>
+        <li>Services & projects</li>
+        <li>Contact & enquiry form</li>
+        <li>FAQ section</li>
+        <li>Advanced animations</li>
+        <li>SEO-friendly structure</li>
+        <li>Mobile optimization</li>
+
+      </ul>
+
+      <a href="#" class="plan-btn">
+        Choose Business →
+      </a>
+
+    </div>
+
+
+    <!-- PREMIUM -->
+
+    <div class="card popular">
+
+      <div class="popular-tag">
+        MOST POPULAR
+      </div>
+
+      <div class="plan-number">03</div>
+
+      <h2 class="plan-name">Premium</h2>
+
+      <p class="plan-desc">
+        A complete premium website for brands
+        and growing businesses.
+      </p>
+
+      <div class="price">
+        ₹12,000
+        <small>starting</small>
+      </div>
+
+      <div class="price-note">
+        One-time project price
+      </div>
+
+      <ul class="features">
+
+        <li>10+ pages</li>
+        <li>Premium glassmorphism UI</li>
+        <li>Custom website sections</li>
+        <li>Advanced animations</li>
+        <li>Interactive components</li>
+        <li>Portfolio / project showcase</li>
+        <li>Advanced contact system</li>
+        <li>Performance optimization</li>
+        <li>SEO-ready structure</li>
+
+      </ul>
+
+      <a href="#" class="plan-btn">
+        Choose Premium →
+      </a>
+
+    </div>
+
+
+    <!-- CUSTOM -->
+
+    <div class="card">
+
+      <div class="plan-number">04</div>
+
+      <h2 class="plan-name">Custom</h2>
+
+      <p class="plan-desc">
+        For unique projects requiring custom
+        features and functionality.
+      </p>
+
+      <div class="price">
+        Custom
+      </div>
+
+      <div class="price-note">
+        Based on requirements
+      </div>
+
+      <ul class="features">
+
+        <li>Custom page structure</li>
+        <li>Custom UI/UX</li>
+        <li>Unique functionality</li>
+        <li>Advanced interactions</li>
+        <li>Custom project features</li>
+        <li>Scalable structure</li>
+        <li>Personalized quotation</li>
+
+      </ul>
+
+      <a href="#" class="plan-btn">
+        Get Custom Quote →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- CUSTOM CTA -->
+
+  <section class="custom-box">
+
+    <div class="custom-content">
+
+      <h2>Need Something Different?</h2>
+
+      <p>
+        Every project is different. Tell us about your idea,
+        required pages, features and design preferences.
+        We'll help you choose the right solution for your project.
+      </p>
+
+    </div>
+
+    <a href="#" class="custom-btn">
+      Start Your Project →
+    </a>
+
+  </section>
+
+
+  <p class="pricing-note">
+    Prices shown are starting prices. Final pricing may vary depending
+    on the number of pages, features, content, integrations and
+    customization required for your project.
+  </p>
+
+
+  <div class="footer">
+    © 2026 JHA APP • All Rights Reserved
+  </div>
+
+</div>
+
+</body>
+</html>
