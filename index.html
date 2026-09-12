@@ -22215,6 +22215,422 @@ Thank you.`;
 })();
 </script>
 </script>
+
+<script>
+/* ============================================================
+   JHAAPP HOME PAGE — GOOGLE SHEET CMS CONNECTOR
+   Google Sheet -> Apps Script API -> Existing Home Page
+   Design/CSS/core behavior remains in code.
+============================================================ */
+(function () {
+    "use strict";
+
+    const JHAAPP_CMS_API =
+        "https://script.google.com/macros/s/AKfycbxs-OI_MzstpRDHaQizge_S21KmUjxJbbwAlovij-AtYeeudH0HR5dNy7VwtJ_dYgc3/exec";
+
+    const esc = function (value) {
+        return String(value ?? "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    };
+
+    const onRows = function (rows) {
+        return (rows || [])
+            .filter(function (r) {
+                return String(r.STATUS || "").toUpperCase() === "ON";
+            })
+            .sort(function (a, b) {
+                return (Number(a.ORDER) || 9999) - (Number(b.ORDER) || 9999);
+            });
+    };
+
+    const rowsByKey = function (rows) {
+        const out = {};
+        (rows || []).forEach(function (r) {
+            if (r.KEY) out[r.KEY] = r;
+        });
+        return out;
+    };
+
+    const value = function (rows, key, fallback) {
+        const r = rowsByKey(rows)[key];
+        return r && String(r.STATUS || "").toUpperCase() === "ON"
+            ? r.VALUE
+            : fallback;
+    };
+
+    function driveUrl(url) {
+        if (!url) return "";
+        const s = String(url).trim();
+
+        let m = s.match(/drive\.google\.com\/file\/d\/([^/]+)/i);
+        if (m) {
+            return "https://drive.google.com/thumbnail?id=" +
+                encodeURIComponent(m[1]) + "&sz=w1600";
+        }
+
+        m = s.match(/[?&]id=([^&]+)/i);
+        if (s.includes("drive.google.com") && m) {
+            return "https://drive.google.com/thumbnail?id=" +
+                encodeURIComponent(m[1]) + "&sz=w1600";
+        }
+
+        return s;
+    }
+
+    function applyCore(data) {
+        const settings = data.HOME_Settings || [];
+        const notice = onRows(data.HOME_Live_Notice);
+        const header = data.HOME_Header || [];
+        const search = data.HOME_Search || [];
+        const hero = data.HOME_Hero || [];
+        const slides = onRows(data.HOME_Hero_Slides);
+        const features = onRows(data.HOME_Quick_Features);
+        const stats = onRows(data.HOME_Stats);
+        const services = onRows(data.HOME_Services);
+        const works = onRows(data.HOME_Featured_Works);
+
+        /* ---------- HEADER ---------- */
+        const brand = rowsByKey(header);
+
+        const logoArea = document.querySelector(".logo-area");
+        if (logoArea) {
+            const brandName = brand.brand_name?.VALUE || "JHA";
+            const brandHighlight = brand.brand_highlight?.VALUE || "APP";
+
+            const mark = logoArea.querySelector(".logo-mark");
+            if (mark && brand.logo_url?.VALUE) {
+                mark.style.backgroundImage =
+                    "url('" + driveUrl(brand.logo_url.VALUE) + "')";
+                mark.style.backgroundSize = "cover";
+                mark.textContent = "";
+            }
+
+            const textNode = Array.from(logoArea.childNodes).find(function (n) {
+                return n.nodeType === 3 && n.textContent.trim();
+            });
+
+            if (textNode) {
+                textNode.textContent = brandName;
+            }
+
+            const links = document.querySelectorAll(".nav-links a");
+            const navMap = {
+                home_text: 0,
+                services_text: 1,
+                plans_text: 2,
+                works_text: 3,
+                about_text: 4,
+                contact_text: 5,
+                build_button_text: 6
+            };
+
+            Object.keys(navMap).forEach(function (key) {
+                const row = brand[key];
+                const index = navMap[key];
+                if (row && String(row.STATUS).toUpperCase() === "ON" && links[index]) {
+                    links[index].textContent = row.VALUE;
+                }
+            });
+        }
+
+        /* ---------- SEARCH ---------- */
+        const searchMap = rowsByKey(search);
+        const searchInput = document.getElementById("searchInput");
+
+        if (
+            searchInput &&
+            searchMap.placeholder &&
+            String(searchMap.placeholder.STATUS).toUpperCase() === "ON"
+        ) {
+            searchInput.placeholder = searchMap.placeholder.VALUE;
+        }
+
+        /* ---------- LIVE NOTICE ---------- */
+        const liveNotice = document.getElementById("liveNotice");
+
+        if (liveNotice && notice.length) {
+            const n = notice[0];
+
+            liveNotice.querySelectorAll(".notice-item").forEach(function (item) {
+                const strong = item.querySelector("strong");
+                const spans = item.querySelectorAll("span");
+
+                if (strong) strong.textContent = n.LABEL || "LIVE";
+                if (spans[1]) spans[1].textContent = n.MESSAGE || "";
+                if (spans[2]) spans[2].textContent =
+                    n.ACTION_TYPE === "BUILD_FORM"
+                        ? "→ Build Your Website ↗"
+                        : (n.ACTION_VALUE || "");
+            });
+
+            liveNotice.style.display = "";
+        }
+
+        /* ---------- HERO TEXT ---------- */
+        const heroMap = rowsByKey(hero);
+        const heroBadge = document.querySelector(".hero-badge");
+        const heroH1 = document.querySelector(".hero h1");
+        const heroP = document.querySelector(".hero p");
+        const heroButtons = document.querySelectorAll(".hero-actions > *");
+
+        if (heroMap.badge && String(heroMap.badge.STATUS).toUpperCase() === "ON" && heroBadge) {
+            const icon = heroBadge.querySelector("i");
+            heroBadge.textContent = heroMap.badge.VALUE || "";
+            if (icon) heroBadge.prepend(icon);
+        }
+
+        if (heroH1) {
+            const line1 = heroMap.heading_line_1?.VALUE || "We Build";
+            const line2 = heroMap.heading_line_2?.VALUE || "Digital Experiences.";
+            heroH1.innerHTML = esc(line1) + "<span>" + esc(line2) + "</span>";
+        }
+
+        if (heroP && heroMap.description) {
+            heroP.textContent = heroMap.description.VALUE || "";
+        }
+
+        if (heroButtons[0] && heroMap.primary_button_text) {
+            heroButtons[0].textContent = heroMap.primary_button_text.VALUE;
+        }
+
+        if (heroButtons[1] && heroMap.secondary_button_text) {
+            heroButtons[1].textContent = heroMap.secondary_button_text.VALUE;
+        }
+
+        /* ---------- HERO SLIDES ---------- */
+        if (slides.length && typeof heroImages !== "undefined") {
+            const urls = slides
+                .map(function (s) { return driveUrl(s.IMAGE_URL); })
+                .filter(Boolean);
+
+            if (urls.length) {
+                heroImages.splice(0, heroImages.length, ...urls);
+
+                const indicatorsEl = document.getElementById("sliderIndicators");
+                if (indicatorsEl) {
+                    indicatorsEl.innerHTML = urls.map(function (_, i) {
+                        return '<button class="' +
+                            (i === 0 ? "active" : "") +
+                            '" data-slide="' + i +
+                            '" aria-label="Slide ' + (i + 1) + '"></button>';
+                    }).join("");
+
+                    indicatorsEl.querySelectorAll("button").forEach(function (button) {
+                        button.addEventListener("click", function (event) {
+                            event.stopPropagation();
+                            showSlide(Number(button.dataset.slide));
+                            startSlider();
+                        });
+                    });
+                }
+
+                showSlide(0);
+                startSlider();
+
+                const duration =
+                    Number(value(settings, "hero_slider_duration_ms", "5000")) || 5000;
+
+                if (typeof slideTimer !== "undefined") {
+                    clearInterval(slideTimer);
+                    slideTimer = setInterval(nextSlide, duration);
+                }
+            }
+        }
+
+        /* ---------- QUICK FEATURES ---------- */
+        const featureSection = document.querySelector(".quick-features");
+
+        if (featureSection && features.length) {
+            featureSection.innerHTML = features.map(function (f) {
+                return `
+                    <div class="feature-card">
+                        <div class="feature-icon">${esc(f.ICON || "•")}</div>
+                        <div>
+                            <strong>${esc(f.TITLE)}</strong>
+                            <small>${esc(f.DESCRIPTION)}</small>
+                        </div>
+                    </div>
+                `;
+            }).join("");
+        }
+
+        /* ---------- EXTENSION HOME ---------- */
+        const home = document.getElementById("jha-home");
+
+        if (!home) return;
+
+        const sections = home.querySelectorAll(".jha-section");
+
+        /* Stats */
+        if (sections[0] && stats.length) {
+            const grid = sections[0].querySelector(".jha-stat-grid");
+            if (grid) {
+                grid.innerHTML = stats.map(function (s) {
+                    return `
+                        <div class="jha-stat">
+                            <strong>${esc(s.NUMBER)}</strong>
+                            <span>${esc(s.LABEL)}</span>
+                        </div>
+                    `;
+                }).join("");
+            }
+        }
+
+        /* Services: update existing service objects, then render */
+        if (services.length && typeof JHA_SERVICES !== "undefined") {
+            services.forEach(function (r) {
+                const item = JHA_SERVICES.find(function (s) {
+                    return s.id === r.ID;
+                });
+
+                if (!item) return;
+
+                if (r.ICON) item.icon = r.ICON;
+                if (r.TITLE) item.title = r.TITLE;
+                if (r.HINDI_TITLE) item.hi = r.HINDI_TITLE;
+                if (r.TAGLINE) item.tagline = r.TAGLINE;
+                if (r.DESCRIPTION) item.desc = r.DESCRIPTION;
+                if (r.BEST_FOR) item.best = r.BEST_FOR;
+                if (r.DETAILS_LINK) item.detailsLink = r.DETAILS_LINK;
+            });
+
+            if (sections[1]) {
+                const grid = sections[1].querySelector(".jha-grid");
+                if (grid) {
+                    grid.innerHTML = services
+                        .map(function (r) {
+                            const s = JHA_SERVICES.find(function (x) {
+                                return x.id === r.ID;
+                            });
+                            return s ? jhaServiceCard(s) : "";
+                        })
+                        .join("");
+                }
+            }
+        }
+
+        /* Featured works */
+        if (sections[2] && works.length && typeof jhaProjectCard === "function") {
+            const grid = sections[2].querySelector(".jha-grid");
+
+            if (grid) {
+                const known = works.filter(function (r) {
+                    return ["school", "temple", "restaurant"].includes(r.ID);
+                });
+
+                grid.innerHTML = known.map(function (r, index) {
+                    if (typeof JHA_PROJECTS !== "undefined" && r.PROJECT_URL) {
+                        JHA_PROJECTS[r.ID] = r.PROJECT_URL;
+                    }
+
+                    if (typeof JHA_IMAGES !== "undefined" && r.IMAGE_URL) {
+                        JHA_IMAGES[index] = driveUrl(r.IMAGE_URL);
+                    }
+
+                    return jhaProjectCard(
+                        r.ID,
+                        r.ICON || "◈",
+                        r.TYPE || "PROJECT",
+                        r.TITLE || r.ID,
+                        r.DESCRIPTION || "",
+                        r.PROJECT_URL || "#",
+                        index
+                    );
+                }).join("");
+            }
+        }
+
+        /* ---------- BUILD FORM OPTIONS ---------- */
+        function fillSelect(id, rows, fallbackText) {
+            const select = document.getElementById(id);
+            if (!select || !rows.length) return;
+
+            select.innerHTML =
+                '<option value="">' + esc(fallbackText) + "</option>" +
+                rows.map(function (r) {
+                    return '<option value="' + esc(r.VALUE || r.OPTION) + '">' +
+                        esc(r.OPTION || r.VALUE) +
+                        "</option>";
+                }).join("");
+        }
+
+        fillSelect(
+            "websiteType",
+            onRows(data.HOME_Form_Website_Types),
+            "Select website type"
+        );
+
+        fillSelect(
+            "budget",
+            onRows(data.HOME_Form_Budgets),
+            "Select budget"
+        );
+
+        fillSelect(
+            "plan",
+            onRows(data.HOME_Form_Plans),
+            "Select plan"
+        );
+
+        fillSelect(
+            "style",
+            onRows(data.HOME_Form_Styles),
+            "Select preferred style"
+        );
+
+        const featureBox = document.querySelector(".check-grid");
+        const formFeatures = onRows(data.HOME_Form_Features);
+
+        if (featureBox && formFeatures.length) {
+            featureBox.innerHTML = formFeatures.map(function (r, i) {
+                const id = "cmsFeature" + (i + 1);
+                return `
+                    <div class="check-option">
+                        <input type="checkbox" id="${id}" value="${esc(r.VALUE || r.FEATURE)}">
+                        <label for="${id}">${esc(r.FEATURE || r.VALUE)}</label>
+                    </div>
+                `;
+            }).join("");
+        }
+    }
+
+    fetch(JHAAPP_CMS_API, {
+        method: "GET",
+        cache: "no-store"
+    })
+    .then(function (response) {
+        if (!response.ok) throw new Error("CMS API HTTP " + response.status);
+        return response.json();
+    })
+    .then(function (payload) {
+        if (!payload || !payload.success) {
+            throw new Error(payload && payload.error
+                ? payload.error
+                : "CMS API returned an invalid response");
+        }
+
+        window.JHAAPP_HOME_CMS = payload.data;
+        applyCore(payload.data);
+
+        document.documentElement.setAttribute(
+            "data-jha-cms",
+            "connected"
+        );
+    })
+    .catch(function (error) {
+        console.warn("JHAAPP Home CMS:", error);
+        document.documentElement.setAttribute(
+            "data-jha-cms",
+            "offline"
+        );
+    });
+})();
+</script>
+
 </body>
 </html>
 <!DOCTYPE html>
